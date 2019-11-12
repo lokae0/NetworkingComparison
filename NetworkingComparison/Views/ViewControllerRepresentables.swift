@@ -8,18 +8,12 @@
 
 import SwiftUI
 
-struct URLSessionForecastView: UIViewControllerRepresentable {
-    func updateUIViewController(_ uiViewController: ForecastViewController, context: UIViewControllerRepresentableContext<URLSessionForecastView>) { }
+struct ForecastView: UIViewControllerRepresentable {
+    let viewModel: ForecastViewModel
+
+    func updateUIViewController(_ uiViewController: ForecastViewController, context: UIViewControllerRepresentableContext<ForecastView>) { }
 
     func makeUIViewController(context: Context) -> ForecastViewController {
-        return ForecastViewController(viewModel: URLSessionViewModel())
-    }
-}
-
-struct AlamofireForecastView: UIViewControllerRepresentable {
-    func updateUIViewController(_ uiViewController: ForecastViewController, context: UIViewControllerRepresentableContext<AlamofireForecastView>) { }
-
-    func makeUIViewController(context: Context) -> ForecastViewController {
-        return ForecastViewController(viewModel: AlamofireViewModel())
+        return ForecastViewController(viewModel: viewModel)
     }
 }

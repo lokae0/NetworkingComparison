@@ -17,12 +17,12 @@ struct ContentView: View {
             VStack(alignment: .leading, spacing: 40.0) {
                 HStack(spacing: 40.0) {
                     NavigationButton(
-                        destination: URLSessionForecastView(),
+                        destination: ForecastView(viewModel: URLSessionViewModel()),
                         isActive: shouldShowUrlSessionForecastView,
                         buttonTitle: "URLSession"
                     )
                     NavigationButton(
-                        destination: AlamofireForecastView(),
+                        destination: ForecastView(viewModel: AlamofireViewModel()),
                         isActive: shouldShowAlamofireForecastView,
                         buttonTitle: "Alamofire"
                     )
