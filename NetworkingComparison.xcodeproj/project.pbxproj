@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,9 @@
 		E4A0EF04236B7D8F00C74A94 /* ViewControllerRepresentables.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A0EF03236B7D8F00C74A94 /* ViewControllerRepresentables.swift */; };
 		E4A0EF06236B896F00C74A94 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A0EF05236B896F00C74A94 /* API.swift */; };
 		E4A0EF08236B9AB900C74A94 /* NavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A0EF07236B9AB900C74A94 /* NavigationButton.swift */; };
+		E4A317C623836644003BE097 /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4A317C123836644003BE097 /* RxRelay.framework */; };
+		E4A317C723836644003BE097 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4A317C223836644003BE097 /* RxSwift.framework */; };
+		E4A317C923836644003BE097 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4A317C423836644003BE097 /* RxCocoa.framework */; };
 		E4F959D123639BAA00BC1879 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F959D023639BAA00BC1879 /* AppDelegate.swift */; };
 		E4F959D323639BAA00BC1879 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F959D223639BAA00BC1879 /* SceneDelegate.swift */; };
 		E4F959D523639BAA00BC1879 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F959D423639BAA00BC1879 /* ContentView.swift */; };
@@ -38,6 +41,9 @@
 		E4A0EF03236B7D8F00C74A94 /* ViewControllerRepresentables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerRepresentables.swift; sourceTree = "<group>"; };
 		E4A0EF05236B896F00C74A94 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		E4A0EF07236B9AB900C74A94 /* NavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationButton.swift; sourceTree = "<group>"; };
+		E4A317C123836644003BE097 /* RxRelay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxRelay.framework; path = Carthage/Build/iOS/RxRelay.framework; sourceTree = "<group>"; };
+		E4A317C223836644003BE097 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
+		E4A317C423836644003BE097 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		E4F959CD23639BAA00BC1879 /* NetworkingComparison.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetworkingComparison.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4F959D023639BAA00BC1879 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E4F959D223639BAA00BC1879 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,7 +61,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4A317C623836644003BE097 /* RxRelay.framework in Frameworks */,
 				E4A0EECD236ABE3900C74A94 /* Alamofire.framework in Frameworks */,
+				E4A317C723836644003BE097 /* RxSwift.framework in Frameworks */,
+				E4A317C923836644003BE097 /* RxCocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,12 +101,22 @@
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
+		E4A317C023835DF5003BE097 /* RxSwift */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RxSwift;
+			sourceTree = "<group>";
+		};
 		E4F959C423639BA900BC1879 = {
 			isa = PBXGroup;
 			children = (
 				E4F959CF23639BAA00BC1879 /* NetworkingComparison */,
 				E4F959CE23639BAA00BC1879 /* Products */,
 				E4A0EECC236ABE3900C74A94 /* Alamofire.framework */,
+				E4A317C423836644003BE097 /* RxCocoa.framework */,
+				E4A317C123836644003BE097 /* RxRelay.framework */,
+				E4A317C223836644003BE097 /* RxSwift.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -117,6 +136,7 @@
 				E4A0EED3236AC82F00C74A94 /* Secrets.swift */,
 				E4A0EF00236B7C7F00C74A94 /* Alamofire */,
 				E4F959E62363A78B00BC1879 /* URLSession */,
+				E4A317C023835DF5003BE097 /* RxSwift */,
 				E4A0EEFC236B7ABF00C74A94 /* Views */,
 				E4A0EEFF236B7C6E00C74A94 /* Models */,
 				E4F959D623639BAC00BC1879 /* Assets.xcassets */,
@@ -218,15 +238,15 @@
 			files = (
 			);
 			inputFileListPaths = (
+				"$(SRCROOT)/input.xcfilelist",
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 			);
 			name = Carthage;
 			outputFileListPaths = (
+				"$(SRCROOT)/output.xcfilelist",
 			);
 			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
