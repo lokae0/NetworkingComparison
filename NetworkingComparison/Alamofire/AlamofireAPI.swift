@@ -24,6 +24,8 @@ class AlamofireAPI {
         return decoder
     }()
 
+    private init() { }
+
     func getForecasts(completion: @escaping (AFResult<[CodableForecast]>) -> Void) {
         switch requestStyle {
         case .router: requestWithRouter(completion)

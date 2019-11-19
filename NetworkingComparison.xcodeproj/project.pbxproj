@@ -20,6 +20,7 @@
 		E4A317C623836644003BE097 /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4A317C123836644003BE097 /* RxRelay.framework */; };
 		E4A317C723836644003BE097 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4A317C223836644003BE097 /* RxSwift.framework */; };
 		E4A317C923836644003BE097 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4A317C423836644003BE097 /* RxCocoa.framework */; };
+		E4A317CC238368CC003BE097 /* RxSwiftAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A317CB238368CC003BE097 /* RxSwiftAPI.swift */; };
 		E4F959D123639BAA00BC1879 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F959D023639BAA00BC1879 /* AppDelegate.swift */; };
 		E4F959D323639BAA00BC1879 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F959D223639BAA00BC1879 /* SceneDelegate.swift */; };
 		E4F959D523639BAA00BC1879 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F959D423639BAA00BC1879 /* ContentView.swift */; };
@@ -44,6 +45,7 @@
 		E4A317C123836644003BE097 /* RxRelay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxRelay.framework; path = Carthage/Build/iOS/RxRelay.framework; sourceTree = "<group>"; };
 		E4A317C223836644003BE097 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		E4A317C423836644003BE097 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
+		E4A317CB238368CC003BE097 /* RxSwiftAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxSwiftAPI.swift; sourceTree = "<group>"; };
 		E4F959CD23639BAA00BC1879 /* NetworkingComparison.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetworkingComparison.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4F959D023639BAA00BC1879 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E4F959D223639BAA00BC1879 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 		E4A317C023835DF5003BE097 /* RxSwift */ = {
 			isa = PBXGroup;
 			children = (
+				E4A317CB238368CC003BE097 /* RxSwiftAPI.swift */,
 			);
 			path = RxSwift;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				E4F959D323639BAA00BC1879 /* SceneDelegate.swift in Sources */,
 				E4F959D523639BAA00BC1879 /* ContentView.swift in Sources */,
 				E4A0EEFE236B7B3700C74A94 /* SubtitleCell.swift in Sources */,
+				E4A317CC238368CC003BE097 /* RxSwiftAPI.swift in Sources */,
 				E4F959E82363A7B100BC1879 /* CodableForecast.swift in Sources */,
 				E4A0EF08236B9AB900C74A94 /* NavigationButton.swift in Sources */,
 				E4F959E52363A2DB00BC1879 /* ForecastViewController.swift in Sources */,
