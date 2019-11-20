@@ -17,70 +17,73 @@ class RxSwiftAPI {
         case badUrl, invalidKey, cityNotFound, serverFailure
     }
 
-    private let session = URLSession.shared
-
-    private enum SessionStyle {
-        case observableRequest, standardRequest, manualResponse
+    enum SessionStyle {
+        case deferredRequest, observableRequest, manualResponse
     }
 
-    private var sessionStyle: SessionStyle = .observableRequest
+    private let session = URLSession.shared
+
+    private let decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .secondsSince1970
+        return decoder
+    }()
 
     private init() { }
 
-    func getForecasts() -> Observable<[CodableForecast]> {
-        var data: Observable<Data>
-        switch sessionStyle {
-        case .observableRequest: data = fetchWithStandardRequest()
-        case .standardRequest: data = fetchWithObservableRequest()
-        case .manualResponse: data = fetchWithManualResponse()
-        }
-        return data.map {
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .secondsSince1970
-            return try decoder.decode(CodableForecastWrapper.self, from: $0).forecasts
+    func getForecasts(with style: SessionStyle) -> Observable<[CodableForecast]> {
+        return data(for: style).map {
+            try self.decoder.decode(CodableForecastWrapper.self, from: $0).forecasts
         }
     }
 
-    private func fetchWithStandardRequest() -> Observable<Data> {
-        print("********** RxSwift requesting with standard URLRequest **********")
-        defer { sessionStyle = .observableRequest }
-
-        let urlRequest: URLRequest? = {
-            guard
-                let pathUrl = URL(string: API.baseUrl)?.appendingPathComponent("forecast"),
-                var components = URLComponents(url: pathUrl, resolvingAgainstBaseURL: true)
-                else { return nil }
-
-            components.queryItems = API.params.map { URLQueryItem(name: $0, value: $1) }
-            guard let completeUrl = components.url else { return nil }
-            return URLRequest(url: completeUrl)
-        }()
-        guard let request = urlRequest else {
-            return Observable.error(RxSwiftError.badUrl)
+    private func data(for style: SessionStyle) -> Observable<Data> {
+        switch style {
+        case .deferredRequest: return fetchWithDeferredRequest()
+        case .observableRequest: return fetchWithObservableRequest()
+        case .manualResponse: return fetchWithManualResponse()
         }
-        return session.rx.data(request: request)
     }
 
-    private func fetchWithObservableRequest() -> Observable<Data> {
-        print("********** RxSwift requesting with observable URLRequest **********")
-        defer { sessionStyle = .manualResponse }
+    private var urlRequest: URLRequest? {
+        guard
+            let pathUrl = URL(string: API.baseUrl)?.appendingPathComponent("forecast"),
+            var components = URLComponents(url: pathUrl, resolvingAgainstBaseURL: true)
+            else { return nil }
 
-        // This is somewhat contrived. You can simply build a URLRequest the "standard" way
-        // since the request doesn't change over time.
-        let request: Observable<URLRequest> = Observable.create { observer in
-            guard
-                let pathUrl = URL(string: API.baseUrl)?.appendingPathComponent("forecast"),
-                var components = URLComponents(url: pathUrl, resolvingAgainstBaseURL: true)
-                else {
-                    observer.onError(RxSwiftError.badUrl)
-                    return Disposables.create()
+        components.queryItems = API.params.map { URLQueryItem(name: $0, value: $1) }
+        guard let completeUrl = components.url else { return nil }
+        return URLRequest(url: completeUrl)
+    }
+
+    /* Using deferred allows the URLRequest to be constructed at time of subscription, as opposed to time
+     * of function call. This is preferable because:
+     * B. Things may get out of date (params, auth, etc.) if returned Observable isn't subscribed to immediately.
+     * C. Resources won't be allocated until they're actually needed (i.e. when subscription actually occurs).
+     */
+    private func fetchWithDeferredRequest() -> Observable<Data> {
+        let session = self.session
+
+        return Observable.deferred { [weak self] in
+            print("********** RxSwift requesting with deferred URLRequest **********")
+
+            guard let request = self?.urlRequest else {
+                return Observable.error(RxSwiftError.badUrl)
             }
-            components.queryItems = API.params.map { URLQueryItem(name: $0, value: $1) }
-            guard let completeUrl = components.url else {
+            return session.rx.data(request: request)
+        }
+    }
+
+    // This also delays request construction until subscription time. Same benefit as above but different approach.
+    private func fetchWithObservableRequest() -> Observable<Data> {
+        let request: Observable<URLRequest> = Observable.create { [weak self] observer in
+            print("********** RxSwift requesting with observable URLRequest **********")
+
+            guard let urlRequest = self?.urlRequest else {
                 observer.onError(RxSwiftError.badUrl)
                 return Disposables.create()
             }
-            observer.onNext(URLRequest(url: completeUrl))
+            observer.onNext(urlRequest)
             observer.onCompleted()
 
             return Disposables.create()
@@ -89,32 +92,25 @@ class RxSwiftAPI {
     }
 
     private func fetchWithManualResponse() -> Observable<Data> {
-        print("********** RxSwift requesting with manual response handling **********")
-        defer { sessionStyle = .standardRequest }
+        let session = self.session
 
-        let urlRequest: URLRequest? = {
-            guard
-                let pathUrl = URL(string: API.baseUrl)?.appendingPathComponent("forecast"),
-                var components = URLComponents(url: pathUrl, resolvingAgainstBaseURL: true)
-                else { return nil }
+        return Observable.deferred { [weak self] in
+            print("********** RxSwift requesting with manual response handling **********")
 
-            components.queryItems = API.params.map { URLQueryItem(name: $0, value: $1) }
-            guard let completeUrl = components.url else { return nil }
-            return URLRequest(url: completeUrl)
-        }()
-        guard let request = urlRequest else {
-            return Observable.error(RxSwiftError.badUrl)
-        }
-        return session.rx.response(request: request).map { response, data in
-            switch response.statusCode {
-            case 200 ..< 300:
-                return data
-            case 401:
-                throw RxSwiftError.invalidKey
-            case 400 ..< 500:
-                throw RxSwiftError.cityNotFound
-            default:
-                throw RxSwiftError.serverFailure
+            guard let request = self?.urlRequest else {
+                return Observable.error(RxSwiftError.badUrl)
+            }
+            return session.rx.response(request: request).map { response, data in
+                switch response.statusCode {
+                case 200 ..< 300:
+                    return data
+                case 401:
+                    throw RxSwiftError.invalidKey
+                case 400 ..< 500:
+                    throw RxSwiftError.cityNotFound
+                default:
+                    throw RxSwiftError.serverFailure
+                }
             }
         }
     }
