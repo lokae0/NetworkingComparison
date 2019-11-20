@@ -17,3 +17,13 @@ struct ForecastView: UIViewControllerRepresentable {
         return ForecastViewController(viewModel: viewModel)
     }
 }
+
+struct RxSwiftForecastView: UIViewControllerRepresentable {
+    let viewModel: RxSwiftViewModel
+
+    func updateUIViewController(_ uiViewController: RxForecastViewController, context: UIViewControllerRepresentableContext<RxSwiftForecastView>) { }
+
+    func makeUIViewController(context: Context) -> RxForecastViewController {
+        return RxForecastViewController(viewModel: viewModel)
+    }
+}

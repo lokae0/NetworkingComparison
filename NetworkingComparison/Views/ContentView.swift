@@ -11,6 +11,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var shouldShowUrlSessionForecastView = false
     @State private var shouldShowAlamofireForecastView = false
+    @State private var shouldShowRxSwiftForecastView = false
 
     var body: some View {
         NavigationView {
@@ -25,6 +26,13 @@ struct ContentView: View {
                         destination: ForecastView(viewModel: AlamofireViewModel()),
                         isActive: shouldShowAlamofireForecastView,
                         buttonTitle: "Alamofire"
+                    )
+                }
+                HStack(spacing: 40.0) {
+                    NavigationButton(
+                        destination: RxSwiftForecastView(viewModel: RxSwiftViewModel()),
+                        isActive: shouldShowRxSwiftForecastView,
+                        buttonTitle: "RxSwift"
                     )
                 }
                 Spacer()
