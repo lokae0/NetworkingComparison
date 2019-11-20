@@ -11,7 +11,7 @@ import Foundation
 class URLSessionViewModel: ForecastViewModel {
     let api = URLSessionAPI()
 
-    func refresh(onSuccess: @escaping ([CodableForecast]) -> Void) {
+    func refresh(onSuccess: @escaping ([Forecast]) -> Void) {
         api.getForecasts { [weak self] result in
             switch result {
             case .success(let forecasts):

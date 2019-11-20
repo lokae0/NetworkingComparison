@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ForecastViewModel {
-    func refresh(onSuccess: @escaping ([CodableForecast]) -> Void)
+    func refresh(onSuccess: @escaping ([Forecast]) -> Void)
 }
 
 class ForecastViewController: UITableViewController {
@@ -18,7 +18,7 @@ class ForecastViewController: UITableViewController {
     }
 
     private let cellReuseIdentifier = "cell"
-    private lazy var dataSource: UITableViewDiffableDataSource<Section, CodableForecast> = {
+    private lazy var dataSource: UITableViewDiffableDataSource<Section, Forecast> = {
         UITableViewDiffableDataSource(
             tableView: tableView,
             cellProvider: { tableView, indexPath, forecast in
@@ -48,7 +48,7 @@ class ForecastViewController: UITableViewController {
 
     @objc private func refresh() {
         viewModel.refresh { [weak self] forecasts in
-            var snapshot = NSDiffableDataSourceSnapshot<Section, CodableForecast>()
+            var snapshot = NSDiffableDataSourceSnapshot<Section, Forecast>()
             snapshot.appendSections(Section.allCases)
             snapshot.appendItems(forecasts, toSection: .hourly)
             self?.dataSource.apply(snapshot, animatingDifferences: true)

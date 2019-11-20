@@ -1,5 +1,5 @@
 //
-//  CodableForecast.swift
+//  Forecast.swift
 //  NetworkingComparison
 //
 //  Created by Ian Luo on 10/25/19.
@@ -8,15 +8,15 @@
 
 import Foundation
 
-struct CodableForecastWrapper: Decodable {
-    let forecasts: [CodableForecast]
+struct ForecastWrapper: Decodable {
+    let forecasts: [Forecast]
 
     private enum CodingKeys: String, CodingKey {
         case forecasts = "list"
     }
 }
 
-struct CodableForecast: Hashable, Decodable {
+struct Forecast: Hashable, Decodable {
     let date: Date
     let temp: Double
     let description: String

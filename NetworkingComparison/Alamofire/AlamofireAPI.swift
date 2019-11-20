@@ -26,7 +26,7 @@ class AlamofireAPI {
 
     private init() { }
 
-    func getForecasts(completion: @escaping (AFResult<[CodableForecast]>) -> Void) {
+    func getForecasts(completion: @escaping (AFResult<[Forecast]>) -> Void) {
         switch requestStyle {
         case .router: requestWithRouter(completion)
         case .params: requestWithParams(completion)
@@ -34,12 +34,12 @@ class AlamofireAPI {
         }
     }
 
-    private func requestWithRouter(_ completion: @escaping (AFResult<[CodableForecast]>) -> Void) {
+    private func requestWithRouter(_ completion: @escaping (AFResult<[Forecast]>) -> Void) {
         print("********** Alamofire requesting with URLRequestConvertible Router **********")
 
         AF.request(Router.forecast)
             .validate()
-            .responseDecodable(of: CodableForecastWrapper.self, decoder: decoder) { [weak self] response in
+            .responseDecodable(of: ForecastWrapper.self, decoder: decoder) { [weak self] response in
                 let forecastResult = response.map { $0.forecasts }.result
                 completion(forecastResult)
 
@@ -47,7 +47,7 @@ class AlamofireAPI {
         }
     }
 
-    private func requestWithParams(_ completion: @escaping (AFResult<[CodableForecast]>) -> Void) {
+    private func requestWithParams(_ completion: @escaping (AFResult<[Forecast]>) -> Void) {
         print("********** Alamofire requesting with URLConvertible and Parameter Dictionary **********")
 
         guard let url = URL(string: API.baseUrl)?.appendingPathComponent("forecast") else {
@@ -57,8 +57,8 @@ class AlamofireAPI {
         AF.request(url, parameters: API.params, encoding: URLEncoding.queryString)
             .validate()
             .responseData { [weak self] response in
-                let forecastResponse = response.map { data -> [CodableForecast] in
-                    guard let wrapper = try? self?.decoder.decode(CodableForecastWrapper.self, from: data) else {
+                let forecastResponse = response.map { data -> [Forecast] in
+                    guard let wrapper = try? self?.decoder.decode(ForecastWrapper.self, from: data) else {
                         completion(.failure(.responseSerializationFailed(reason: .inputDataNilOrZeroLength)))
                         return []
                     }
@@ -70,7 +70,7 @@ class AlamofireAPI {
         }
     }
 
-    private func requestWithEncodable(_ completion: @escaping (AFResult<[CodableForecast]>) -> Void) {
+    private func requestWithEncodable(_ completion: @escaping (AFResult<[Forecast]>) -> Void) {
         print("********** Alamofire requesting with URLConvertible and Encodable parameter model **********")
 
         struct Params: Codable {
@@ -94,7 +94,7 @@ class AlamofireAPI {
             parameters: encodableParams,
             encoder: URLEncodedFormParameterEncoder(destination: .queryString)
         )
-        request.validate().responseDecodable(of: CodableForecastWrapper.self, decoder: decoder) { [weak self] response in
+        request.validate().responseDecodable(of: ForecastWrapper.self, decoder: decoder) { [weak self] response in
             let forecastResponse = response.map {
                 $0.forecasts.filter { $0.temp > 60 }
             }

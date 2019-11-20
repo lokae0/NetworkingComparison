@@ -18,7 +18,7 @@ class URLSessionAPI {
     private let session = URLSession.shared
     private var dataTask: URLSessionDataTask?
 
-    func getForecasts(completion: @escaping (Result<[CodableForecast], APIError>) -> Void) {
+    func getForecasts(completion: @escaping (Result<[Forecast], APIError>) -> Void) {
         print("********** URLSession requesting with dataTask **********")
         guard
             let pathUrl = URL(string: API.baseUrl)?.appendingPathComponent("forecast"),
@@ -52,7 +52,7 @@ class URLSessionAPI {
             }
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .secondsSince1970
-            let forecasts = try? decoder.decode(CodableForecastWrapper.self, from: data).forecasts
+            let forecasts = try? decoder.decode(ForecastWrapper.self, from: data).forecasts
             completion(.success(forecasts ?? []))
 
         }

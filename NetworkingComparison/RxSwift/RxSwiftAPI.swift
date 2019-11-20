@@ -31,9 +31,9 @@ class RxSwiftAPI {
 
     private init() { }
 
-    func getForecasts(with style: SessionStyle) -> Observable<[CodableForecast]> {
+    func getForecasts(with style: SessionStyle) -> Observable<[Forecast]> {
         return data(for: style).map {
-            try self.decoder.decode(CodableForecastWrapper.self, from: $0).forecasts
+            try self.decoder.decode(ForecastWrapper.self, from: $0).forecasts
         }
     }
 

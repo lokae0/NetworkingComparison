@@ -28,7 +28,7 @@
 		E4F959DA23639BAC00BC1879 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4F959D923639BAC00BC1879 /* Preview Assets.xcassets */; };
 		E4F959DD23639BAC00BC1879 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4F959DB23639BAC00BC1879 /* LaunchScreen.storyboard */; };
 		E4F959E52363A2DB00BC1879 /* ForecastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F959E42363A2DB00BC1879 /* ForecastViewController.swift */; };
-		E4F959E82363A7B100BC1879 /* CodableForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F959E72363A7B100BC1879 /* CodableForecast.swift */; };
+		E4F959E82363A7B100BC1879 /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F959E72363A7B100BC1879 /* Forecast.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,7 +55,7 @@
 		E4F959DC23639BAC00BC1879 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E4F959DE23639BAC00BC1879 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4F959E42363A2DB00BC1879 /* ForecastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastViewController.swift; sourceTree = "<group>"; };
-		E4F959E72363A7B100BC1879 /* CodableForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableForecast.swift; sourceTree = "<group>"; };
+		E4F959E72363A7B100BC1879 /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +88,7 @@
 		E4A0EEFF236B7C6E00C74A94 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E4F959E72363A7B100BC1879 /* CodableForecast.swift */,
+				E4F959E72363A7B100BC1879 /* Forecast.swift */,
 				E4A0EF05236B896F00C74A94 /* API.swift */,
 			);
 			path = Models;
@@ -269,7 +269,7 @@
 				E4F959D523639BAA00BC1879 /* ContentView.swift in Sources */,
 				E4A0EEFE236B7B3700C74A94 /* SubtitleCell.swift in Sources */,
 				E4A317CC238368CC003BE097 /* RxSwiftAPI.swift in Sources */,
-				E4F959E82363A7B100BC1879 /* CodableForecast.swift in Sources */,
+				E4F959E82363A7B100BC1879 /* Forecast.swift in Sources */,
 				E4A0EF08236B9AB900C74A94 /* NavigationButton.swift in Sources */,
 				E4F959E52363A2DB00BC1879 /* ForecastViewController.swift in Sources */,
 				E4A0EF06236B896F00C74A94 /* API.swift in Sources */,

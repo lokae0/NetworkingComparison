@@ -12,7 +12,7 @@ import Alamofire
 class AlamofireViewModel: ForecastViewModel {
     let api = AlamofireAPI.shared
 
-    func refresh(onSuccess: @escaping ([CodableForecast]) -> Void) {
+    func refresh(onSuccess: @escaping ([Forecast]) -> Void) {
         api.getForecasts { result in
             switch result {
             case .success(let forecasts):
