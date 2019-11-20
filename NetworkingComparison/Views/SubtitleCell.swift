@@ -13,6 +13,11 @@ class SubtitleCell: UITableViewCell {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
     }
 
+    func update(forecast: Forecast) {
+        detailTextLabel?.text = forecast.formattedDate
+        textLabel?.text = forecast.formattedDescription
+    }
+
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 

@@ -22,9 +22,10 @@ class ForecastViewController: UITableViewController {
         UITableViewDiffableDataSource(
             tableView: tableView,
             cellProvider: { tableView, indexPath, forecast in
-                let cell = tableView.dequeueReusableCell(withIdentifier: self.cellReuseIdentifier, for: indexPath)
-                cell.detailTextLabel?.text = forecast.formattedDate
-                cell.textLabel?.text = forecast.formattedDescription
+                guard let cell = tableView.dequeueReusableCell(
+                    withIdentifier: self.cellReuseIdentifier, for: indexPath) as? SubtitleCell
+                    else { return UITableViewCell() }
+                cell.update(forecast: forecast)
                 return cell
         })
     }()

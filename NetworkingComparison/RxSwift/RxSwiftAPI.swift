@@ -21,6 +21,8 @@ class RxSwiftAPI {
         case deferredRequest, observableRequest, manualResponse
     }
 
+    typealias ForecastInfo = Observable<(forecasts: [Forecast], style: SessionStyle)>
+
     private let session = URLSession.shared
 
     private let decoder: JSONDecoder = {
@@ -31,9 +33,10 @@ class RxSwiftAPI {
 
     private init() { }
 
-    func getForecasts(with style: SessionStyle) -> Observable<[Forecast]> {
+    func getForecasts(with style: SessionStyle) -> ForecastInfo {
         return data(for: style).map {
-            try self.decoder.decode(ForecastWrapper.self, from: $0).forecasts
+            let forecasts = try self.decoder.decode(ForecastWrapper.self, from: $0).forecasts
+            return (forecasts, style)
         }
     }
 
