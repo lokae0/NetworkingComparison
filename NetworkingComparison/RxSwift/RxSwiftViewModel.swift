@@ -12,8 +12,20 @@ import RxCocoa
 
 class RxSwiftViewModel {
     let api = RxSwiftAPI.shared
+    let bag = DisposeBag()
 
-    var forecasts: Driver<[Forecast]> {
-        api.getForecasts().asDriver(onErrorJustReturn: [])
+    let forecasts = PublishRelay<[Forecast]>()
+
+    func refresh() {
+        api.getForecasts()
+            .subscribe(
+                onNext: { self.forecasts.accept($0) },
+                onError: { self.handle(error: $0) }
+            )
+            .disposed(by: bag)
+    }
+
+    private func handle(error: Error) {
+        print("RxSwift Error: \(error).\n\nDescription: \(error.localizedDescription)")
     }
 }

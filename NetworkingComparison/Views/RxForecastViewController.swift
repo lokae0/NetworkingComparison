@@ -20,24 +20,25 @@ class RxForecastViewController: UITableViewController {
     init(viewModel: RxSwiftViewModel) {
         self.viewModel = viewModel
         super.init(style: .plain)
+        viewModel.refresh()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(SubtitleCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        refresh()
+        bindViewModel()
 
         refreshControl = UIRefreshControl()
-
         refreshControl?.rx.controlEvent(.valueChanged)
-            .subscribe(onNext: refresh)
+            .subscribe(onNext: viewModel.refresh)
             .disposed(by: bag)
     }
 
-    private func refresh() {
+    private func bindViewModel() {
         viewModel.forecasts
+            .observeOn(MainScheduler.instance)
             .do(onNext: { _ in self.refreshControl?.endRefreshing() })
-            .drive(tableView.rx.items(cellIdentifier: cellReuseIdentifier, cellType: SubtitleCell.self)) {
+            .bind(to: tableView.rx.items(cellIdentifier: cellReuseIdentifier, cellType: SubtitleCell.self)) {
                 _, forecast, cell in
                 cell.update(forecast: forecast)
             }
