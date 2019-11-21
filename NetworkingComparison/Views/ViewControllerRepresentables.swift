@@ -9,21 +9,30 @@
 import SwiftUI
 
 struct ForecastView: UIViewControllerRepresentable {
-    let viewModel: ForecastViewModel
+    enum ViewModelType {
+        case URLSession, alamofire
+
+        var viewModel: ForecastViewModel {
+            switch self {
+            case .URLSession: return URLSessionViewModel()
+            case .alamofire: return AlamofireViewModel()
+            }
+        }
+    }
+
+    let type: ViewModelType
 
     func updateUIViewController(_ uiViewController: ForecastViewController, context: UIViewControllerRepresentableContext<ForecastView>) { }
 
     func makeUIViewController(context: Context) -> ForecastViewController {
-        return ForecastViewController(viewModel: viewModel)
+        return ForecastViewController(viewModel: type.viewModel)
     }
 }
 
 struct RxSwiftForecastView: UIViewControllerRepresentable {
-    let viewModel: RxSwiftViewModel
-
     func updateUIViewController(_ uiViewController: RxForecastViewController, context: UIViewControllerRepresentableContext<RxSwiftForecastView>) { }
 
     func makeUIViewController(context: Context) -> RxForecastViewController {
-        return RxForecastViewController(viewModel: viewModel)
+        return RxForecastViewController(viewModel: RxSwiftViewModel())
     }
 }
