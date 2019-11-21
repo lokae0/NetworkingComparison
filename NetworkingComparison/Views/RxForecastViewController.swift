@@ -36,14 +36,12 @@ class RxForecastViewController: UITableViewController {
 
     private func bindViewModel() {
         viewModel.forecasts
-            .observeOn(MainScheduler.instance)
             .do(onNext: { _ in self.refreshControl?.endRefreshing() })
-            .bind(to: tableView.rx.items(cellIdentifier: cellReuseIdentifier, cellType: SubtitleCell.self)) {
+            .drive(tableView.rx.items(cellIdentifier: cellReuseIdentifier, cellType: SubtitleCell.self)) {
                 _, forecast, cell in
                 cell.update(forecast: forecast)
             }
             .disposed(by: bag)
-
     }
 
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }

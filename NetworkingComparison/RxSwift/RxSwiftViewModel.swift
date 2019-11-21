@@ -14,14 +14,20 @@ class RxSwiftViewModel {
     let api = RxSwiftAPI.shared
     let bag = DisposeBag()
 
-    let forecasts = PublishRelay<[Forecast]>()
+    var forecasts: Driver<[Forecast]> {
+        forecastsRelay.asDriver(onErrorJustReturn: [])
+    }
+
+    private let forecastsRelay = PublishRelay<[Forecast]>()
 
     func refresh() {
         api.getForecasts()
-            .subscribe(
-                onNext: { self.forecasts.accept($0) },
-                onError: { self.handle(error: $0) }
-            )
+            .retry(3)
+            .catchError {
+                self.handle(error: $0)
+                return Observable.just([])
+            }
+            .subscribe(onNext: { self.forecastsRelay.accept($0) })
             .disposed(by: bag)
     }
 
