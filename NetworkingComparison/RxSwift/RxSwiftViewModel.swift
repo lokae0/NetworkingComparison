@@ -14,9 +14,18 @@ class RxSwiftViewModel {
     let api = RxSwiftAPI.shared
 
     var forecasts: Observable<[Forecast]> {
+        // This subscribes to all the API calls immediately and causes them to fire upon init,
+        // rather than each requesting individually as needed.
         return Observable.combineLatest(sessionStyle.asObservable(), deferredInfo, observableInfo, manualInfo) {
             style, deferredInfo, observableInfo, manualInfo in
-            return [deferredInfo, observableInfo, manualInfo].first { $0.style == style }?.forecasts ?? []
+            switch style {
+            case .deferredRequest:
+                return deferredInfo.forecasts
+            case .observableRequest:
+                return observableInfo.forecasts.filter { $0.temp < 54 }
+            case .manualResponse:
+                return observableInfo.forecasts.filter { $0.temp > 60 }
+            }
         }
     }
 
@@ -28,8 +37,13 @@ class RxSwiftViewModel {
 
     init() {
         deferredInfo = api.getForecasts(with: .deferredRequest)
+            .catchErrorJustReturn(([Forecast](), .deferredRequest))
+
         observableInfo = api.getForecasts(with: .observableRequest)
+            .catchErrorJustReturn(([Forecast](), .observableRequest))
+
         manualInfo = api.getForecasts(with: .manualResponse)
+            .catchErrorJustReturn(([Forecast](), .manualResponse))
     }
 
     func refresh() {

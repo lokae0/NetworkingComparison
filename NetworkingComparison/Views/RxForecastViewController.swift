@@ -26,20 +26,24 @@ class RxForecastViewController: UITableViewController {
         super.viewDidLoad()
         tableView.register(SubtitleCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         bindViewModel()
-//        tableView.dataSource = dataSource
 
         refreshControl = UIRefreshControl()
-//        refreshControl?.rx.controlEvent(.valueChanged)
-//        refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
+
+        refreshControl?.rx.controlEvent(.valueChanged)
+            .subscribe(onNext: viewModel.refresh)
+            .disposed(by: bag)
     }
 
     private func bindViewModel() {
         viewModel.forecasts
+            .observeOn(MainScheduler.instance)
+            .do(onNext: { _ in self.refreshControl?.endRefreshing() })
             .bind(to: tableView.rx.items(cellIdentifier: cellReuseIdentifier, cellType: SubtitleCell.self)) {
                 _, forecast, cell in
                 cell.update(forecast: forecast)
             }
             .disposed(by: bag)
+
     }
 
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
