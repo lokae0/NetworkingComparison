@@ -36,7 +36,7 @@ class RxForecastViewController: UITableViewController {
 
     private func bindViewModel() {
         viewModel.forecasts
-            .do(onNext: { _ in self.refreshControl?.endRefreshing() })
+            .do(onNext: { [weak self] _ in self?.refreshControl?.endRefreshing() })
             .drive(tableView.rx.items(cellIdentifier: cellReuseIdentifier, cellType: SubtitleCell.self)) {
                 _, forecast, cell in
                 cell.update(forecast: forecast)

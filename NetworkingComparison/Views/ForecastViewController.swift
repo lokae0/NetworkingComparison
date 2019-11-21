@@ -21,9 +21,11 @@ class ForecastViewController: UITableViewController {
     private lazy var dataSource: UITableViewDiffableDataSource<Section, Forecast> = {
         UITableViewDiffableDataSource(
             tableView: tableView,
-            cellProvider: { tableView, indexPath, forecast in
-                guard let cell = tableView.dequeueReusableCell(
-                    withIdentifier: self.cellReuseIdentifier, for: indexPath) as? SubtitleCell
+            cellProvider: { [weak self] tableView, indexPath, forecast in
+                guard
+                    let self = self,
+                    let cell = tableView.dequeueReusableCell(
+                        withIdentifier: self.cellReuseIdentifier, for: indexPath) as? SubtitleCell
                     else { return UITableViewCell() }
                 cell.update(forecast: forecast)
                 return cell
