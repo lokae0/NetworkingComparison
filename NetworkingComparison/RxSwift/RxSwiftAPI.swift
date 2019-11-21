@@ -17,11 +17,11 @@ class RxSwiftAPI {
         case badUrl, invalidKey, cityNotFound, serverFailure
     }
 
-    enum SessionStyle {
+    private enum SessionStyle {
         case deferredRequest, observableRequest, manualResponse
     }
 
-    typealias ForecastInfo = Observable<(forecasts: [Forecast], style: SessionStyle)>
+    private var currentStyle: SessionStyle = .deferredRequest
 
     private let session = URLSession.shared
 
@@ -33,10 +33,16 @@ class RxSwiftAPI {
 
     private init() { }
 
-    func getForecasts(with style: SessionStyle) -> ForecastInfo {
-        return data(for: style).map {
+    func getForecasts() -> Observable<[Forecast]> {
+        return data(for: currentStyle).map {
             let forecasts = try self.decoder.decode(ForecastWrapper.self, from: $0).forecasts
-            return (forecasts, style)
+
+            // Simulate different response data
+            switch self.currentStyle {
+            case .deferredRequest: return forecasts
+            case .observableRequest: return forecasts.filter { $0.temp > 60 }
+            case .manualResponse: return forecasts.filter { $0.temp < 54 }
+            }
         }
     }
 
@@ -75,6 +81,7 @@ class RxSwiftAPI {
             }
             return session.rx.data(request: request)
         }
+        .do(onDispose: { self.currentStyle = .observableRequest })
     }
 
     // This also delays request construction until subscription time. Same benefit as above but different approach.
@@ -92,6 +99,7 @@ class RxSwiftAPI {
             return Disposables.create()
         }
         return request.flatMap(session.rx.data(request:))
+            .do(onDispose: { self.currentStyle = .manualResponse })
     }
 
     private func fetchWithManualResponse() -> Observable<Data> {
@@ -116,5 +124,6 @@ class RxSwiftAPI {
                 }
             }
         }
+        .do(onDispose: { self.currentStyle = .deferredRequest })
     }
 }

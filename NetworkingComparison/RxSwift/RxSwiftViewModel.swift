@@ -13,47 +13,7 @@ import RxCocoa
 class RxSwiftViewModel {
     let api = RxSwiftAPI.shared
 
-    var forecasts: Observable<[Forecast]> {
-        // This subscribes to all the API calls immediately and causes them to fire upon init,
-        // rather than each requesting individually as needed.
-        return Observable.combineLatest(sessionStyle.asObservable(), deferredInfo, observableInfo, manualInfo) {
-            style, deferredInfo, observableInfo, manualInfo in
-            switch style {
-            case .deferredRequest:
-                return deferredInfo.forecasts
-            case .observableRequest:
-                return observableInfo.forecasts.filter { $0.temp < 54 }
-            case .manualResponse:
-                return observableInfo.forecasts.filter { $0.temp > 60 }
-            }
-        }
-    }
-
-    private var sessionStyle = BehaviorRelay<RxSwiftAPI.SessionStyle>(value: .deferredRequest)
-
-    private let deferredInfo: RxSwiftAPI.ForecastInfo
-    private let observableInfo: RxSwiftAPI.ForecastInfo
-    private let manualInfo: RxSwiftAPI.ForecastInfo
-
-    init() {
-        deferredInfo = api.getForecasts(with: .deferredRequest)
-            .catchErrorJustReturn(([Forecast](), .deferredRequest))
-
-        observableInfo = api.getForecasts(with: .observableRequest)
-            .catchErrorJustReturn(([Forecast](), .observableRequest))
-
-        manualInfo = api.getForecasts(with: .manualResponse)
-            .catchErrorJustReturn(([Forecast](), .manualResponse))
-    }
-
-    func refresh() {
-        switch sessionStyle.value {
-        case .deferredRequest:
-            sessionStyle.accept(.observableRequest)
-        case .observableRequest:
-            sessionStyle.accept(.manualResponse)
-        case .manualResponse:
-            sessionStyle.accept(.deferredRequest)
-        }
+    var forecasts: Driver<[Forecast]> {
+        api.getForecasts().asDriver(onErrorJustReturn: [])
     }
 }
