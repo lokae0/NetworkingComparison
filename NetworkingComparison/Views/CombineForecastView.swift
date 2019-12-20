@@ -16,9 +16,8 @@ struct CombineForecastView: View {
             Text(forecast.date.description)
             Text(forecast.description)
         }
-        .onAppear {
-            self.viewModel.refresh()
-        }
+        .onAppear { self.viewModel.refresh() }
+        .onDisappear { self.viewModel.reset() }
     }
 }
 

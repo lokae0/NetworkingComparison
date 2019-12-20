@@ -27,6 +27,10 @@ class CombineViewModel: ObservableObject {
             .assign(to: \.forecasts, on: self)
     }
 
+    func reset() {
+        _ = Just([]).assign(to: \.forecasts, on: self)
+    }
+
     private func handle(error: Error) {
         if let error = error as? CombineAPI.CombineError {
             switch error {
