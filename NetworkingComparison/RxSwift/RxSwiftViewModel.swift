@@ -32,6 +32,19 @@ class RxSwiftViewModel {
     }
 
     private func handle(error: Error) {
-        print("RxSwift Error: \(error).\n\nDescription: \(error.localizedDescription)")
+        if let error = error as? RxSwiftAPI.RxSwiftError {
+            switch error {
+            case .badUrl:
+                assertionFailure("bad URL")
+            case .invalidKey:
+                assertionFailure("Invalid Key")
+            case .cityNotFound:
+                assertionFailure("City not found")
+            case .serverFailure:
+                print("Server failure")
+            }
+        } else {
+            print("RxSwift Error: \(error).\n\nDescription: \(error.localizedDescription)")
+        }
     }
 }
