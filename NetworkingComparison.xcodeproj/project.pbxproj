@@ -83,16 +83,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E4A0EEFC236B7ABF00C74A94 /* Views */ = {
+		E45279CC23AD479400788D42 /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				E4F959D423639BAA00BC1879 /* ContentView.swift */,
 				E4A0EF07236B9AB900C74A94 /* NavigationButton.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		E45279CD23AD47C300788D42 /* Forecast View Controllers */ = {
+			isa = PBXGroup;
+			children = (
 				E4A0EF03236B7D8F00C74A94 /* ViewControllerRepresentables.swift */,
 				E4F959E42363A2DB00BC1879 /* ForecastViewController.swift */,
 				E4A317CF2385E1AC003BE097 /* RxForecastViewController.swift */,
-				E45279CA23AC702B00788D42 /* CombineForecastView.swift */,
 				E4A0EEFD236B7B3700C74A94 /* SubtitleCell.swift */,
+			);
+			path = "Forecast View Controllers";
+			sourceTree = "<group>";
+		};
+		E45279CE23AD47E400788D42 /* Combine Forecast View */ = {
+			isa = PBXGroup;
+			children = (
+				E45279CA23AC702B00788D42 /* CombineForecastView.swift */,
+			);
+			path = "Combine Forecast View";
+			sourceTree = "<group>";
+		};
+		E4A0EEFC236B7ABF00C74A94 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E45279CC23AD479400788D42 /* Home */,
+				E45279CD23AD47C300788D42 /* Forecast View Controllers */,
+				E45279CE23AD47E400788D42 /* Combine Forecast View */,
 			);
 			path = Views;
 			sourceTree = "<group>";
