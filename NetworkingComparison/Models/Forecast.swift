@@ -57,4 +57,17 @@ struct Forecast: Hashable, Decodable {
         let weather = try weatherContainer.decode(WeatherInfo.self)
         description = weather.description
     }
+
+    fileprivate init(date: Date, temp: Double, description: String) {
+        self.date = date
+        self.temp = temp
+        self.description = description
+    }
+}
+
+extension Forecast {
+    static func mockForecast() -> Forecast {
+        return Forecast(date: Date(), temp: 55.3, description: "light rain")
+
+    }
 }

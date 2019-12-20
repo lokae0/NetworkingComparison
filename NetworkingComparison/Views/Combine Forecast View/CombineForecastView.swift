@@ -12,9 +12,8 @@ struct CombineForecastView: View {
     @ObservedObject var viewModel = CombineViewModel()
 
     var body: some View {
-        List(viewModel.forecasts, id: \.date) { forecast in
-            Text(forecast.date.description)
-            Text(forecast.description)
+        List(viewModel.forecasts, id: \.date) {
+            ForecastRow(forecast: $0)
         }
         .onAppear { self.viewModel.refresh() }
         .onDisappear { self.viewModel.reset() }
