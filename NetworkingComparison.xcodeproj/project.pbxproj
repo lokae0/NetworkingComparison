@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E44A44C4236800C200691A9F /* URLSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44A44C3236800C200691A9F /* URLSessionViewModel.swift */; };
+		E45279C923AC5DE200788D42 /* CombineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45279C823AC5DE200788D42 /* CombineViewModel.swift */; };
 		E472644D2363B5470063D32B /* URLSessionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E472644C2363B5470063D32B /* URLSessionAPI.swift */; };
 		E4A0EECD236ABE3900C74A94 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4A0EECC236ABE3900C74A94 /* Alamofire.framework */; };
 		E4A0EED2236AC17F00C74A94 /* AlamofireAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A0EED1236AC17F00C74A94 /* AlamofireAPI.swift */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		E44A44C3236800C200691A9F /* URLSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionViewModel.swift; sourceTree = "<group>"; };
+		E45279C823AC5DE200788D42 /* CombineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineViewModel.swift; sourceTree = "<group>"; };
 		E472644C2363B5470063D32B /* URLSessionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionAPI.swift; sourceTree = "<group>"; };
 		E4A0EECC236ABE3900C74A94 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		E4A0EED1236AC17F00C74A94 /* AlamofireAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireAPI.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				E4A317D223873C64003BE097 /* CombineAPI.swift */,
+				E45279C823AC5DE200788D42 /* CombineViewModel.swift */,
 			);
 			path = Combine;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 			files = (
 				E44A44C4236800C200691A9F /* URLSessionViewModel.swift in Sources */,
 				E4A0EED4236AC82F00C74A94 /* Secrets.swift in Sources */,
+				E45279C923AC5DE200788D42 /* CombineViewModel.swift in Sources */,
 				E4F959D123639BAA00BC1879 /* AppDelegate.swift in Sources */,
 				E4A317D02385E1AC003BE097 /* RxForecastViewController.swift in Sources */,
 				E4F959D323639BAA00BC1879 /* SceneDelegate.swift in Sources */,
