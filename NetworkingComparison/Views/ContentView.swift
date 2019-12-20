@@ -12,6 +12,7 @@ struct ContentView: View {
     @State private var shouldShowUrlSessionForecastView = false
     @State private var shouldShowAlamofireForecastView = false
     @State private var shouldShowRxSwiftForecastView = false
+    @State private var shouldShowCombineForecastView = false
 
     var body: some View {
         NavigationView {
@@ -33,6 +34,11 @@ struct ContentView: View {
                         destination: RxSwiftForecastView(),
                         isActive: shouldShowRxSwiftForecastView,
                         buttonTitle: "RxSwift"
+                    )
+                    NavigationButton(
+                        destination: CombineForecastView(),
+                        isActive: shouldShowCombineForecastView,
+                        buttonTitle: "Combine"
                     )
                 }
                 Spacer()
